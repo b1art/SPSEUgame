@@ -11,6 +11,14 @@ class Game(object):
     font.setBold(True)
     font.setWeight(75)
 
+    # функция изменяющая деньги
+    def change_money(self, amount):
+        self.moneyL.setText(str(int(self.moneyL.text()) + amount))
+
+    # функция изменяющая зоровье
+    def change_health(self, amount):
+        self.healthL.setText(str(int(self.healthL.text()) + amount))
+
     def setupUi(self, MainWindow):
         # Главное окно
         MainWindow.setObjectName("MainWindow")
@@ -63,60 +71,79 @@ class Game(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "SPSEUgame"))
         self.label.setText(_translate("MainWindow", "Симулятор ГЭУ или как выжить студентом"))
         self.pushButton.setText(_translate("MainWindow", "Начать"))
-    # Записываем методы в кнопки
+
+    # Записываем метод кнопки инициализации игры
     def add_functions(self):
         self.pushButton.clicked.connect(self.init_game)
 
-    # Будущая функция обработки кнопки старт
+    # Функция обработки кнопки старт
     def init_game(self):
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.verticalLayout.removeWidget(self.pushButton)
+        #self.verticalLayout.removeWidget(self.pushButton)
         self.pushButton.deleteLater()
-        self.verticalLayout.removeWidget(self.label)
+        #self.verticalLayout.removeWidget(self.label)
         self.label.deleteLater()
 
-        #money label
-        self.money = QtWidgets.QLabel(self.centralwidget)
-        Game.font.setPointSize(15)
-        self.money.setFont(Game.font)
-        #self.money.setAlignment(QtCore.Qt.AlignTop)
-        self.money.setObjectName("money")
-        #self.verticalLayout.addWidget(self.money)
-        self.money.setText('money:')
-        self.money.move(0, 0)
-        self.money.adjustSize()
-        self.money.show()
+        # money icon
+        self.moneyW = QtWidgets.QLabel(self.centralwidget)
+        self.money = QPixmap('money.png')
+        self.moneyW.setObjectName('money')
+        self.moneyW.setPixmap(self.money)
+        self.moneyW.adjustSize()
+        self.moneyW.move(0, 0)
+        self.moneyW.show()
+        # money label
+        self.moneyL = QtWidgets.QLabel(self.centralwidget)
+        self.font.setPointSize(20)
+        self.moneyL.setFont(self.font)
+        self.moneyL.setText('0')
+        self.moneyL.adjustSize()
+        self.moneyL.move(90, 0)
+        self.moneyL.show()
 
-        #health label
+        # health icon
         self.health = QtWidgets.QLabel(self.centralwidget)
-        Game.font.setPointSize(15)
-        self.health.setFont(Game.font)
-        #self.health.setAlignment(QtCore.Qt.AlignTop)
-        self.health.setObjectName("health")
-        #self.verticalLayout.addWidget(self.health)
-        self.health.setText('health:')
-        self.health.move(0, 50)
+        self.heart = QPixmap('simple_heart.png')
+        self.health.setObjectName('heart')
+        self.health.setPixmap(self.heart)
         self.health.adjustSize()
+        self.health.move(0, 60)
         self.health.show()
+        # health label
+        self.healthL = QtWidgets.QLabel(self.centralwidget)
+        self.font.setPointSize(20)
+        self.healthL.setFont(self.font)
+        self.healthL.setText('100')
+        self.healthL.adjustSize()
+        self.healthL.move(90, 60)
+        self.healthL.show()
 
-        #
-        #self.btn = QtWidgets.QPushButton(self.centralwidget)
-        #Game.font.setPointSize(20)
-        #self.btn.setFont(Game.font)
-        #self.btn.setStyleSheet("background-color: rgb(123, 123, 123);")
-        #self.btn.setObjectName("btn")
-        #self.verticalLayout.addWidget(self.btn)
-
-        #knowledges
+        # knowledges icon
+        self.knowledges = QtWidgets.QLabel(self.centralwidget)
+        self.book = QPixmap('knowledge.png')
+        self.knowledges.setObjectName('knowledge')
+        self.knowledges.setPixmap(self.book)
+        self.knowledges.adjustSize()
+        self.knowledges.move(245, 0)
+        self.knowledges.show()
+        # knowledge bar
         self.knwbar = QtWidgets.QProgressBar(self.centralwidget)
         self.knwbar.setObjectName('knwbar')
-        self.knwbar.setGeometry(95, 15, 200, 20)
+        self.knwbar.setGeometry(325, 5, 250, 30)
         self.knwbar.show()
 
-        #motivation
+        # motivation icon
+        self.motivation = QtWidgets.QLabel(self.centralwidget)
+        self.mindset = QPixmap('mindset.png')
+        self.motivation.setObjectName('motivation')
+        self.motivation.setPixmap(self.mindset)
+        self.motivation.adjustSize()
+        self.motivation.move(245, 60)
+        self.motivation.show()
+        # motivation bar
         self.motivationbar = QtWidgets.QProgressBar(self.centralwidget)
         self.motivationbar.setObjectName('motivationbar')
-        self.motivationbar.setGeometry(95, 65, 200, 20)
+        self.motivationbar.setGeometry(325, 75, 250, 30)
         self.motivationbar.show()
 
         print('Game has started')
