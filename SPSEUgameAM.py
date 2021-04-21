@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QPixmap, QIcon
 
 
 
@@ -79,9 +79,7 @@ class Game(object):
     # Функция обработки кнопки старт
     def init_game(self):
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
-        #self.verticalLayout.removeWidget(self.pushButton)
         self.pushButton.deleteLater()
-        #self.verticalLayout.removeWidget(self.label)
         self.label.deleteLater()
 
         # money icon
@@ -145,6 +143,26 @@ class Game(object):
         self.motivationbar.setObjectName('motivationbar')
         self.motivationbar.setGeometry(325, 75, 250, 30)
         self.motivationbar.show()
+
+        # inventory
+        self.inventory = QtWidgets.QLabel(self.centralwidget)
+        self.inventory.setText('Будущий инвентарь')
+        self.inventory.adjustSize()
+        self.inventory.move(300, 300)
+
+        # inventory button
+        self.inventory_button = QtWidgets.QPushButton(self.centralwidget)
+        self.inventory_bag = QIcon('bag.png')
+        self.inventory_button.setIcon(self.inventory_bag)
+        self.inventory_button.setIconSize(QSize(64, 64))
+        self.inventory_button.adjustSize()
+        self.inventory_button.move(1800, 0)
+        self.inventory_button.show()
+        self.inventory_button.clicked.connect(self.show_inv)
+
+
+    def show_inv(self):
+        self.inventory.show()
 
         print('Game has started')
 
