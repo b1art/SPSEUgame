@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtWidgets import QGridLayout
 
 
 
@@ -84,7 +85,7 @@ class Game(object):
 
         # money icon
         self.moneyW = QtWidgets.QLabel(self.centralwidget)
-        self.money = QPixmap('money.png')
+        self.money = QPixmap('icons/money.png')
         self.moneyW.setObjectName('money')
         self.moneyW.setPixmap(self.money)
         self.moneyW.adjustSize()
@@ -101,7 +102,7 @@ class Game(object):
 
         # health icon
         self.health = QtWidgets.QLabel(self.centralwidget)
-        self.heart = QPixmap('simple_heart.png')
+        self.heart = QPixmap('icons/simple_heart.png')
         self.health.setObjectName('heart')
         self.health.setPixmap(self.heart)
         self.health.adjustSize()
@@ -118,7 +119,7 @@ class Game(object):
 
         # knowledges icon
         self.knowledges = QtWidgets.QLabel(self.centralwidget)
-        self.book = QPixmap('knowledge.png')
+        self.book = QPixmap('icons/knowledge.png')
         self.knowledges.setObjectName('knowledge')
         self.knowledges.setPixmap(self.book)
         self.knowledges.adjustSize()
@@ -132,7 +133,7 @@ class Game(object):
 
         # motivation icon
         self.motivation = QtWidgets.QLabel(self.centralwidget)
-        self.mindset = QPixmap('mindset.png')
+        self.mindset = QPixmap('icons/mindset.png')
         self.motivation.setObjectName('motivation')
         self.motivation.setPixmap(self.mindset)
         self.motivation.adjustSize()
@@ -145,26 +146,54 @@ class Game(object):
         self.motivationbar.show()
 
         # inventory
-        self.inventory = QtWidgets.QLabel(self.centralwidget)
-        self.inventory.setText('Будущий инвентарь')
-        self.inventory.adjustSize()
-        self.inventory.move(300, 300)
+        self.inventory = QtWidgets.QFrame(self.centralwidget)
+        self.inventory.setGeometry(1600, 100, 300, 600)
+        self.inventory.setStyleSheet("background-color: rgb(123, 125, 123);")
+
+
+        self.grid = QGridLayout()
+        self.inventory.setLayout(self.grid)
+
+        names = ['1', '1', '1', '2', '1', '1', '6', '1', '1', '8', '1', '16', '1', '1', '1', '2']
+        positions = [(i, j) for i in range(8) for j in range(2)]
+        for position, name in zip(positions, names):
+            if name == '':
+                continue
+            button = QtWidgets.QPushButton(name)
+            self.grid.addWidget(button, *position)
+
+        #self.btn1 = QtWidgets.QPushButton()
+        #self.btn1.setText('btn1')
+        #self.grid.addWidget(self.btn1)
+
+
+
 
         # inventory button
         self.inventory_button = QtWidgets.QPushButton(self.centralwidget)
-        self.inventory_bag = QIcon('bag.png')
+        self.inventory_bag = QIcon('icons/bag.png')
         self.inventory_button.setIcon(self.inventory_bag)
         self.inventory_button.setIconSize(QSize(64, 64))
         self.inventory_button.adjustSize()
         self.inventory_button.move(1800, 0)
+        self.inventory_button.setCheckable(True)
         self.inventory_button.show()
         self.inventory_button.clicked.connect(self.show_inv)
 
 
     def show_inv(self):
-        self.inventory.show()
+        if self.inventory_button.isCheckable():
+            self.inventory_button.setCheckable(False)
+            self.inventory.show()
+        else:
+            self.inventory_button.setCheckable(True)
+            self.inventory.hide()
 
         print('Game has started')
+
+    def add_item(self, name='asd'):
+        self.new_item = QtWidgets.QPushButton(self.inventory)
+        self.new_item.setText(name)
 
 
 if __name__ == "__main__":
@@ -174,4 +203,6 @@ if __name__ == "__main__":
     ui = Game()
     ui.setupUi(MainWindow)
     MainWindow.showMaximized()
+    #ui.names[2] = 'ASD'
+    #Game.inventory1.add_item()
     sys.exit(app.exec_())
