@@ -160,9 +160,9 @@ class Game(object):
         self.dgrid = QGridLayout()
         self.dialog = QtWidgets.QFrame(self.centralwidget)
         self.dialog.setLayout(self.dgrid)
-        self.dialog.setGeometry(75, 200, 600, 400)
+        self.dialog.setGeometry(75, 200, 800, 600)
         self.dialog.setStyleSheet(
-            "background-color: rgb(200, 15, 100);border-radius:60px;"
+            "background-color: rgb(219, 112, 147);border-radius:60px;"
         )
         self.dialog.show()
         # dialog...
@@ -266,6 +266,7 @@ class Game(object):
         self.question = QtWidgets.QLabel(self.dialog)
         Game.font.setPointSize(20)
         self.question.setFont(Game.font)
+        self.question.setWordWrap(True)
         self.question.setText(keys[0])
         self.question.setAlignment(QtCore.Qt.AlignLeft)
         self.question.adjustSize()
@@ -273,14 +274,14 @@ class Game(object):
         self.option1.setText(questions[keys[0]][0])
         self.option1.setFont(Game.font)
         self.option1.setStyleSheet(
-            "text-align: left; background-color: rgb(255, 255, 255); border-radius:60px;}"
+            "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
         )
         self.option1.clicked.connect(self.answered)
         self.option2 = QtWidgets.QPushButton(self.dialog)
         self.option2.setText(questions[keys[0]][1])
         self.option2.setFont(Game.font)
         self.option2.setStyleSheet(
-            "text-align: left; background-color: rgb(255, 255, 255); border-radius:60px;}"
+            "border-radius:60px;text-align: left;background-color: rgb(255, 192, 203);"
         )
         self.option2.clicked.connect(self.answered)
 
@@ -293,10 +294,11 @@ class Game(object):
         self.option1.deleteLater()
         self.option2.deleteLater()
         try:
-            pair = questions.pop(keys[0])
+            pair = questions.pop(keys[1])
             self.question = QtWidgets.QLabel(self.dialog)
             Game.font.setPointSize(20)
             self.question.setFont(Game.font)
+            self.question.setWordWrap(True)
             self.question.setText(keys[1])
             self.question.setAlignment(QtCore.Qt.AlignLeft)
             self.question.adjustSize()
@@ -304,14 +306,14 @@ class Game(object):
             self.option1.setText(pair[0])
             self.option1.setFont(Game.font)
             self.option1.setStyleSheet(
-                "text-align: left; background-color: rgb(255, 255, 255); border-radius:60px;}"
+                "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
             )
             self.option1.clicked.connect(self.answered)
             self.option2 = QtWidgets.QPushButton(self.dialog)
             self.option2.setText(pair[1])
             self.option2.setFont(Game.font)
             self.option2.setStyleSheet(
-                "text-align: left; background-color: rgb(255, 255, 255); border-radius:60px;}"
+                "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
             )
             self.option2.clicked.connect(self.answered)
 
@@ -323,14 +325,19 @@ class Game(object):
             self.question = QtWidgets.QLabel(self.dialog)
             Game.font.setPointSize(20)
             self.question.setFont(Game.font)
-            self.question.setText("nema voprosov")
+            self.question.setText("Вы отчислены")
             self.question.setAlignment(QtCore.Qt.AlignCenter)
             self.question.adjustSize()
             self.dgrid.addWidget(self.question, *(0, 0))
+            # Тестовая штука
+            self.add_item('тест')
+            self.add_item('тест')
 
     def show_inv(self):
         if self.inventory_button.isCheckable():
             self.inventory_button.setCheckable(False)
+            # Тестовая штука
+            self.add_item('тест')
             self.inventory.show()
         else:
             self.inventory_button.setCheckable(True)
@@ -408,7 +415,4 @@ if __name__ == "__main__":
     ui = Game()
     ui.setupUi(MainWindow)
     MainWindow.showMaximized()
-    # ui.add_item('adsasdasd')
-    # ui.names[2] = 'ASD'
-    # Game.inventory1.add_item()
     sys.exit(app.exec_())
