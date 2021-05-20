@@ -2,7 +2,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QGridLayout
-from Inventory import Inventory
 import json
 
 ######## Выбор характеристики?
@@ -11,7 +10,7 @@ with open("questions.json", "r") as file:
     questions = json.load(file)
 
 keys = list(questions.keys())
-
+pair = questions.pop(keys[0])
 
 class Game(object):
 
@@ -180,7 +179,6 @@ class Game(object):
 
         self.grid = QGridLayout()
         self.inventory.setLayout(self.grid)
-        myInv = Inventory()
 
         self.slot1 = QtWidgets.QFrame()
         self.slot1.setStyleSheet("background-color: rgb(200, 15, 100);")
@@ -271,56 +269,103 @@ class Game(object):
         self.question.setAlignment(QtCore.Qt.AlignLeft)
         self.question.adjustSize()
         self.option1 = QtWidgets.QPushButton(self.dialog)
-        self.option1.setText(questions[keys[0]][0])
+        self.option1.setText(pair[0][0])
         self.option1.setFont(Game.font)
         self.option1.setStyleSheet(
             "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
         )
-        self.option1.clicked.connect(self.answered)
+        self.option1.clicked.connect(self.answered_u)
         self.option2 = QtWidgets.QPushButton(self.dialog)
-        self.option2.setText(questions[keys[0]][1])
+        self.option2.setText(pair[1][0])
         self.option2.setFont(Game.font)
         self.option2.setStyleSheet(
             "border-radius:60px;text-align: left;background-color: rgb(255, 192, 203);"
         )
-        self.option2.clicked.connect(self.answered)
+        self.option2.clicked.connect(self.answered_l)
 
         self.dgrid.addWidget(self.question, *(0, 0))
         self.dgrid.addWidget(self.option1, *(1, 0))
         self.dgrid.addWidget(self.option2, *(2, 0))
-
-    def answered(self):
+# написать ловер pair 1 1 соответсвенно
+    def answered_u(self):
+        global pair
+        del keys[0]
         self.question.deleteLater()
         self.option1.deleteLater()
         self.option2.deleteLater()
+        self.effect(pair[0][1])
         try:
-            pair = questions.pop(keys[1])
-            self.question = QtWidgets.QLabel(self.dialog)
-            Game.font.setPointSize(20)
-            self.question.setFont(Game.font)
-            self.question.setWordWrap(True)
-            self.question.setText(keys[1])
-            self.question.setAlignment(QtCore.Qt.AlignLeft)
-            self.question.adjustSize()
-            self.option1 = QtWidgets.QPushButton(self.dialog)
-            self.option1.setText(pair[0])
-            self.option1.setFont(Game.font)
-            self.option1.setStyleSheet(
-                "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
-            )
-            self.option1.clicked.connect(self.answered)
-            self.option2 = QtWidgets.QPushButton(self.dialog)
-            self.option2.setText(pair[1])
-            self.option2.setFont(Game.font)
-            self.option2.setStyleSheet(
-                "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
-            )
-            self.option2.clicked.connect(self.answered)
+            pair = questions.pop(keys[0])
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > int(self.moneyL.text()):
+                if int(self.healthL.text()) <= 0:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setText("x_x")
+                    self.question.setAlignment(QtCore.Qt.AlignCenter)
+                    self.question.adjustSize()
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                else:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setWordWrap(True)
+                    self.question.setText(keys[0])
+                    self.question.setAlignment(QtCore.Qt.AlignLeft)
+                    self.question.adjustSize()
+                    self.option1 = QtWidgets.QLabel(self.dialog)
+                    self.option1.setText(pair[0][0])
+                    self.option1.setFont(Game.font)
+                    self.option1.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2 = QtWidgets.QPushButton(self.dialog)
+                    self.option2.setText(pair[1][0])
+                    self.option2.setFont(Game.font)
+                    self.option2.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2.clicked.connect(self.answered_l)
 
-            self.dgrid.addWidget(self.question, *(0, 0))
-            self.dgrid.addWidget(self.option1, *(1, 0))
-            self.dgrid.addWidget(self.option2, *(2, 0))
-            del keys[0]
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                    self.dgrid.addWidget(self.option1, *(1, 0))
+                    self.dgrid.addWidget(self.option2, *(2, 0))
+
+            else:
+                if int(self.healthL.text()) <= 0:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setText("x_x")
+                    self.question.setAlignment(QtCore.Qt.AlignCenter)
+                    self.question.adjustSize()
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                else:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setWordWrap(True)
+                    self.question.setText(keys[0])
+                    self.question.setAlignment(QtCore.Qt.AlignLeft)
+                    self.question.adjustSize()
+                    self.option1 = QtWidgets.QPushButton(self.dialog)
+                    self.option1.setText(pair[0][0])
+                    self.option1.setFont(Game.font)
+                    self.option1.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option1.clicked.connect(self.answered_u)
+                    self.option2 = QtWidgets.QPushButton(self.dialog)
+                    self.option2.setText(pair[1][0])
+                    self.option2.setFont(Game.font)
+                    self.option2.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2.clicked.connect(self.answered_l)
+
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                    self.dgrid.addWidget(self.option1, *(1, 0))
+                    self.dgrid.addWidget(self.option2, *(2, 0))
         except:
             self.question = QtWidgets.QLabel(self.dialog)
             Game.font.setPointSize(20)
@@ -329,9 +374,94 @@ class Game(object):
             self.question.setAlignment(QtCore.Qt.AlignCenter)
             self.question.adjustSize()
             self.dgrid.addWidget(self.question, *(0, 0))
-            # Тестовая штука
-            self.add_item('тест')
-            self.add_item('тест')
+
+    def answered_l(self):
+        global pair
+        del keys[0]
+        self.question.deleteLater()
+        self.option1.deleteLater()
+        self.option2.deleteLater()
+        self.effect(pair[1][1])
+        try:
+            pair = questions.pop(keys[0])
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > int(self.moneyL.text()):
+                if int(self.healthL.text()) <= 0:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setText("x_x")
+                    self.question.setAlignment(QtCore.Qt.AlignCenter)
+                    self.question.adjustSize()
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                else:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setWordWrap(True)
+                    self.question.setText(keys[0])
+                    self.question.setAlignment(QtCore.Qt.AlignLeft)
+                    self.question.adjustSize()
+                    self.option1 = QtWidgets.QLabel(self.dialog)
+                    self.option1.setText(pair[0][0])
+                    self.option1.setFont(Game.font)
+                    self.option1.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2 = QtWidgets.QPushButton(self.dialog)
+                    self.option2.setText(pair[1][0])
+                    self.option2.setFont(Game.font)
+                    self.option2.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2.clicked.connect(self.answered_l)
+
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                    self.dgrid.addWidget(self.option1, *(1, 0))
+                    self.dgrid.addWidget(self.option2, *(2, 0))
+            else:
+                if int(self.healthL.text()) <= 0:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setText("x_x")
+                    self.question.setAlignment(QtCore.Qt.AlignCenter)
+                    self.question.adjustSize()
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                else:
+                    self.question = QtWidgets.QLabel(self.dialog)
+                    Game.font.setPointSize(20)
+                    self.question.setFont(Game.font)
+                    self.question.setWordWrap(True)
+                    self.question.setText(keys[0])
+                    self.question.setAlignment(QtCore.Qt.AlignLeft)
+                    self.question.adjustSize()
+                    self.option1 = QtWidgets.QPushButton(self.dialog)
+                    self.option1.setText(pair[0][0])
+                    self.option1.setFont(Game.font)
+                    self.option1.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option1.clicked.connect(self.answered_u)
+                    self.option2 = QtWidgets.QPushButton(self.dialog)
+                    self.option2.setText(pair[1][0])
+                    self.option2.setFont(Game.font)
+                    self.option2.setStyleSheet(
+                        "text-align: left;background-color: rgb(255, 192, 203);border-radius:60px;"
+                    )
+                    self.option2.clicked.connect(self.answered_l)
+
+                    self.dgrid.addWidget(self.question, *(0, 0))
+                    self.dgrid.addWidget(self.option1, *(1, 0))
+                    self.dgrid.addWidget(self.option2, *(2, 0))
+        except:
+            self.question = QtWidgets.QLabel(self.dialog)
+            Game.font.setPointSize(20)
+            self.question.setFont(Game.font)
+            self.question.setText("Вы отчислены")
+            self.question.setAlignment(QtCore.Qt.AlignCenter)
+            self.question.adjustSize()
+            self.dgrid.addWidget(self.question, *(0, 0))
+
 
     def show_inv(self):
         if self.inventory_button.isCheckable():
@@ -405,6 +535,16 @@ class Game(object):
         # else:
         self.new_item = QtWidgets.QPushButton(self.find_slot())
         self.new_item.setText(name)
+
+    def effect(self, assoc):
+        as_keys = list(assoc.keys())
+        for i in as_keys:
+            if i == "hp":
+                self.change_health(assoc[i])
+            if i == "money":
+                self.change_money(assoc[i])
+            if i == "cost":
+                self.change_money(-assoc[i])
 
 
 if __name__ == "__main__":
