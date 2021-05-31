@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QGridLayout
 import json
-
+import random
 
 with open("questions.json", "r") as file:
     questions = json.load(file)
@@ -16,10 +16,15 @@ class Game(object):
     font.setFamily("Segoe Print")
     font.setBold(True)
     font.setWeight(75)
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1920, 1080)
         self.t = 45
+        self.money = random.randrange(10, 50)
+        self.healthh = random.randrange(50, 100)
+        self.motivation = random.randrange(30, 80)
+        self.knowladges = random.randrange(30, 70)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.08, y1:0.0738636, x2:0.766, y2:0.556864, stop:0 rgba(158, 35, 37, 255), stop:1 rgba(38, 38, 38, 255))")
         self.centralwidget.setObjectName("centralwidget")
@@ -73,9 +78,9 @@ class Game(object):
         self.pushButton1.setIconSize(QtCore.QSize(140, 90))
         self.pushButton1.setObjectName("pushButton")
 #Book
-        self.pushButton1 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton1.setGeometry(QtCore.QRect(1500, 130, 141, 101))
-        self.pushButton1.setStyleSheet("QPushButton{\n"
+        self.pushButton2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton2.setGeometry(QtCore.QRect(1500, 130, 141, 101))
+        self.pushButton2.setStyleSheet("QPushButton{\n"
                                       "background-color: transparent; \n"
                                       "border: 2px solid white;\n"
                                       "}\n"
@@ -83,16 +88,16 @@ class Game(object):
                                       "border: 2px solid black;\n"
                                       "background-color: rgba(255, 255, 255, 0.2);\n"
                                       "}")
-        self.pushButton1.setText("")
+        self.pushButton2.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("pics/book.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton1.setIcon(icon)
-        self.pushButton1.setIconSize(QtCore.QSize(140, 90))
-        self.pushButton1.setObjectName("pushButton")
+        self.pushButton2.setIcon(icon)
+        self.pushButton2.setIconSize(QtCore.QSize(140, 90))
+        self.pushButton2.setObjectName("pushButton")
 #Tubls
-        self.pushButton1 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton1.setGeometry(QtCore.QRect(1700, 130, 141, 101))
-        self.pushButton1.setStyleSheet("QPushButton{\n"
+        self.pushButton3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton3.setGeometry(QtCore.QRect(1700, 130, 141, 101))
+        self.pushButton3.setStyleSheet("QPushButton{\n"
                                       "background-color: transparent; \n"
                                       "border: 2px solid white;\n"
                                       "}\n"
@@ -100,12 +105,12 @@ class Game(object):
                                       "border: 2px solid black;\n"
                                       "background-color: rgba(255, 255, 255, 0.2);\n"
                                       "}")
-        self.pushButton1.setText("")
+        self.pushButton3.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("pics/tubls.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton1.setIcon(icon)
-        self.pushButton1.setIconSize(QtCore.QSize(140, 90))
-        self.pushButton1.setObjectName("pushButton")
+        self.pushButton3.setIcon(icon)
+        self.pushButton3.setIconSize(QtCore.QSize(140, 90))
+        self.pushButton3.setObjectName("pushButton")
 #Shop label
         self.label_shop = QtWidgets.QLabel(self.centralwidget)
         self.label_shop.setGeometry(QtCore.QRect(1520, 20, 111, 61))
@@ -153,7 +158,7 @@ class Game(object):
                                         "QProgressBar::chunk{\n"
                                         "background-color: red;\n"
                                         "}")
-        if self.t < 35:
+        if self.healthh < 35:
             self.progressBar2.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -164,7 +169,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: red;\n"
                                             "}")
-        elif self.t > 34 and self.t < 65:
+        elif self.healthh > 34 and self.healthh < 65:
             self.progressBar2.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -175,7 +180,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: orange;\n"
                                             "}")
-        elif self.t > 64:
+        elif self.healthh > 64:
             self.progressBar2.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -186,7 +191,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
-        self.progressBar2.setProperty("value", self.t)
+        self.progressBar2.setProperty("value", self.healthh)
         self.progressBar2.setObjectName("progressBar")
 #label3 + bar3
         self.label3 = QtWidgets.QLabel(self.centralwidget)
@@ -209,7 +214,7 @@ class Game(object):
                                         "QProgressBar::chunk{\n"
                                         "background-color: red;\n"
                                         "}")
-        if self.t < 35:
+        if self.motivation < 35:
             self.progressBar3.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -220,7 +225,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: red;\n"
                                             "}")
-        elif self.t > 34 and self.t < 65:
+        elif self.motivation > 34 and self.motivation < 65:
             self.progressBar3.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -231,7 +236,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: orange;\n"
                                             "}")
-        elif self.t > 64:
+        elif self.motivation > 64:
             self.progressBar3.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -242,7 +247,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
-        self.progressBar3.setProperty("value", self.t)
+        self.progressBar3.setProperty("value", self.motivation)
         self.progressBar3.setObjectName("progressBar")
 #label4 + bar4
         self.label4 = QtWidgets.QLabel(self.centralwidget)
@@ -265,7 +270,7 @@ class Game(object):
                                         "QProgressBar::chunk{\n"
                                         "background-color: red;\n"
                                         "}")
-        if self.t < 35:
+        if self.knowladges < 35:
             self.progressBar4.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -276,7 +281,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: red;\n"
                                             "}")
-        elif self.t > 34 and self.t < 65:
+        elif self.knowladges > 34 and self.knowladges < 65:
             self.progressBar4.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -287,7 +292,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: orange;\n"
                                             "}")
-        elif self.t > 64:
+        elif self.knowladges > 64:
             self.progressBar4.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
@@ -298,7 +303,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
-        self.progressBar4.setProperty("value", self.t)
+        self.progressBar4.setProperty("value", self.knowladges)
         self.progressBar4.setObjectName("progressBar")
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -514,7 +519,7 @@ class Game(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_shop.setText(_translate("MainWindow", "Shop"))
         s = 345
-        self.label1.setText(_translate("MainWindow", "Money: " + str(s) + "$"))
+        self.label1.setText(_translate("MainWindow", "Money: " + str(self.money) + "$"))
         self.label2.setText(_translate("MainWindow", "Health"))
         self.label3.setText(_translate("MainWindow", "Motivation"))
         self.label4.setText(_translate("MainWindow", "Knowledges"))
