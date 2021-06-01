@@ -20,16 +20,14 @@ class Game(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1920, 1080)
-        self.t = 45
         self.money = random.randrange(10, 50)
         self.healthh = random.randrange(50, 100)
         self.motivation = random.randrange(30, 80)
-        self.knowladges = random.randrange(30, 70)
+        self.knowledges = random.randrange(30, 70)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.08, y1:0.0738636, x2:0.766, y2:0.556864, stop:0 rgba(158, 35, 37, 255), stop:1 rgba(38, 38, 38, 255))")
         self.centralwidget.setObjectName("centralwidget")
         # dialog window
-        Game.font.setPointSize(15)
         Game.font.setPointSize(20)
 
         self.dgrid = QGridLayout()
@@ -129,82 +127,64 @@ class Game(object):
         self.label_human.setObjectName("label")
 #label_Money
 
-        self.label1 = QtWidgets.QLabel(self.centralwidget)
-        self.label1.setGeometry(QtCore.QRect(20, 20, 300, 41))
+        self.moneyL = QtWidgets.QLabel(self.centralwidget)
+        self.moneyL.setGeometry(QtCore.QRect(20, 20, 300, 41))
         font = QtGui.QFont()
         font.setPointSize(24)
-        self.label1.setFont(font)
-        self.label1.setStyleSheet("color:white;\nbackground-color: transparent;"
+        self.moneyL.setFont(font)
+        self.moneyL.setStyleSheet("color:white;\nbackground-color: transparent;"
                                  "")
-        self.label1.setObjectName("label")
-#label2 + bar2
-        self.label2 = QtWidgets.QLabel(self.centralwidget)
-        self.label2.setGeometry(QtCore.QRect(126, 105, 111, 41))
+        self.moneyL.setObjectName("label")
+#health
+        self.healthPBtext = QtWidgets.QLabel(self.centralwidget)
+        self.healthPBtext.setGeometry(QtCore.QRect(126, 105, 111, 41))
         font = QtGui.QFont()
         font.setPointSize(17)
-        self.label2.setFont(font)
-        self.label2.setStyleSheet("color:white;\nbackground-color: transparent;"
+        self.healthPBtext.setFont(font)
+        self.healthPBtext.setStyleSheet("color:white;\nbackground-color: transparent;"
                                   "")
-        self.label2.setObjectName("label")
-        self.progressBar2 = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar2.setGeometry(QtCore.QRect(30, 140, 280, 23))
-        self.progressBar2.setStyleSheet("QProgressBar {\n"
-                                        "color: white;\n"
-                                        "background-color: transparent;\n"
-                                        "border: 4px solid black;\n"
-                                        "border-radius: 20px;\n"
-                                        "text-align: center;\n"
-                                        "}\n"
-                                        "QProgressBar::chunk{\n"
-                                        "background-color: red;\n"
-                                        "}")
+        self.healthPBtext.setObjectName("label")
+        self.healthPB = QtWidgets.QProgressBar(self.centralwidget)
+        self.healthPB.setGeometry(QtCore.QRect(30, 140, 280, 23))
+        self.color_h()
+        self.healthPB.setProperty("value", self.healthh)
+        self.healthPB.setObjectName("progressBar")
+#motivation
+        self.motivationPBtext = QtWidgets.QLabel(self.centralwidget)
+        self.motivationPBtext.setGeometry(QtCore.QRect(107, 185, 140, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        self.motivationPBtext.setFont(font)
+        self.motivationPBtext.setStyleSheet("color:white;\nbackground-color: transparent;"
+                                  "")
+        self.motivationPBtext.setObjectName("label")
+        self.motivationPB = QtWidgets.QProgressBar(self.centralwidget)
+        self.motivationPB.setGeometry(QtCore.QRect(30, 220, 280, 23))
+        self.color_mtv()
+        self.motivationPB.setProperty("value", self.motivation)
+        self.motivationPB.setObjectName("progressBar")
+#knowledges
+        self.knowledgesPBtext = QtWidgets.QLabel(self.centralwidget)
+        self.knowledgesPBtext.setGeometry(QtCore.QRect(98, 262, 180, 41))
+        font = QtGui.QFont()
+        font.setPointSize(17)
+        self.knowledgesPBtext.setFont(font)
+        self.knowledgesPBtext.setStyleSheet("color:white;\nbackground-color: transparent;"
+                                  "")
+        self.knowledgesPBtext.setObjectName("label")
+        self.knowledgesPB = QtWidgets.QProgressBar(self.centralwidget)
+        self.knowledgesPB.setGeometry(QtCore.QRect(30, 300, 280, 23))
+        self.color_knw()
+        self.knowledgesPB.setProperty("value", self.knowledges)
+        self.knowledgesPB.setObjectName("progressBar")
+
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def color_h(self):
         if self.healthh < 35:
-            self.progressBar2.setStyleSheet("QProgressBar {\n"
-                                            "color: white;\n"
-                                            "background-color: transparent;\n"
-                                            "border: 4px solid black;\n"
-                                            "border-radius: 20px;\n"
-                                            "text-align: center;\n"
-                                            "}\n"
-                                            "QProgressBar::chunk{\n"
-                                            "background-color: red;\n"
-                                            "}")
-        elif self.healthh > 34 and self.healthh < 65:
-            self.progressBar2.setStyleSheet("QProgressBar {\n"
-                                            "color: white;\n"
-                                            "background-color: transparent;\n"
-                                            "border: 4px solid black;\n"
-                                            "border-radius: 20px;\n"
-                                            "text-align: center;\n"
-                                            "}\n"
-                                            "QProgressBar::chunk{\n"
-                                            "background-color: orange;\n"
-                                            "}")
-        elif self.healthh > 64:
-            self.progressBar2.setStyleSheet("QProgressBar {\n"
-                                            "color: white;\n"
-                                            "background-color: transparent;\n"
-                                            "border: 4px solid black;\n"
-                                            "border-radius: 20px;\n"
-                                            "text-align: center;\n"
-                                            "}\n"
-                                            "QProgressBar::chunk{\n"
-                                            "background-color: green;\n"
-                                            "}")
-        self.progressBar2.setProperty("value", self.healthh)
-        self.progressBar2.setObjectName("progressBar")
-#label3 + bar3
-        self.label3 = QtWidgets.QLabel(self.centralwidget)
-        self.label3.setGeometry(QtCore.QRect(107, 185, 140, 41))
-        font = QtGui.QFont()
-        font.setPointSize(17)
-        self.label3.setFont(font)
-        self.label3.setStyleSheet("color:white;\nbackground-color: transparent;"
-                                  "")
-        self.label3.setObjectName("label")
-        self.progressBar3 = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar3.setGeometry(QtCore.QRect(30, 220, 280, 23))
-        self.progressBar3.setStyleSheet("QProgressBar {\n"
+            self.healthPB.setStyleSheet("QProgressBar {\n"
                                         "color: white;\n"
                                         "background-color: transparent;\n"
                                         "border: 4px solid black;\n"
@@ -214,8 +194,31 @@ class Game(object):
                                         "QProgressBar::chunk{\n"
                                         "background-color: red;\n"
                                         "}")
+        elif self.healthh > 34 and self.healthh < 65:
+            self.healthPB.setStyleSheet("QProgressBar {\n"
+                                        "color: white;\n"
+                                        "background-color: transparent;\n"
+                                        "border: 4px solid black;\n"
+                                        "border-radius: 20px;\n"
+                                        "text-align: center;\n"
+                                        "}\n"
+                                        "QProgressBar::chunk{\n"
+                                        "background-color: orange;\n"
+                                        "}")
+        elif self.healthh > 64:
+            self.healthPB.setStyleSheet("QProgressBar {\n"
+                                        "color: white;\n"
+                                        "background-color: transparent;\n"
+                                        "border: 4px solid black;\n"
+                                        "border-radius: 20px;\n"
+                                        "text-align: center;\n"
+                                        "}\n"
+                                        "QProgressBar::chunk{\n"
+                                        "background-color: green;\n"
+                                        "}")
+    def color_mtv(self):
         if self.motivation < 35:
-            self.progressBar3.setStyleSheet("QProgressBar {\n"
+            self.motivationPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -226,7 +229,7 @@ class Game(object):
                                             "background-color: red;\n"
                                             "}")
         elif self.motivation > 34 and self.motivation < 65:
-            self.progressBar3.setStyleSheet("QProgressBar {\n"
+            self.motivationPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -237,7 +240,7 @@ class Game(object):
                                             "background-color: orange;\n"
                                             "}")
         elif self.motivation > 64:
-            self.progressBar3.setStyleSheet("QProgressBar {\n"
+            self.motivationPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -247,31 +250,9 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
-        self.progressBar3.setProperty("value", self.motivation)
-        self.progressBar3.setObjectName("progressBar")
-#label4 + bar4
-        self.label4 = QtWidgets.QLabel(self.centralwidget)
-        self.label4.setGeometry(QtCore.QRect(98, 262, 180, 41))
-        font = QtGui.QFont()
-        font.setPointSize(17)
-        self.label4.setFont(font)
-        self.label4.setStyleSheet("color:white;\nbackground-color: transparent;"
-                                  "")
-        self.label4.setObjectName("label")
-        self.progressBar4 = QtWidgets.QProgressBar(self.centralwidget)
-        self.progressBar4.setGeometry(QtCore.QRect(30, 300, 280, 23))
-        self.progressBar4.setStyleSheet("QProgressBar {\n"
-                                        "color: white;\n"
-                                        "background-color: transparent;\n"
-                                        "border: 4px solid black;\n"
-                                        "border-radius: 20px;\n"
-                                        "text-align: center;\n"
-                                        "}\n"
-                                        "QProgressBar::chunk{\n"
-                                        "background-color: red;\n"
-                                        "}")
-        if self.knowladges < 35:
-            self.progressBar4.setStyleSheet("QProgressBar {\n"
+    def color_knw(self):
+        if self.knowledges < 35:
+            self.knowledgesPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -281,8 +262,8 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: red;\n"
                                             "}")
-        elif self.knowladges > 34 and self.knowladges < 65:
-            self.progressBar4.setStyleSheet("QProgressBar {\n"
+        elif self.knowledges > 34 and self.knowledges < 65:
+            self.knowledgesPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -292,8 +273,8 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: orange;\n"
                                             "}")
-        elif self.knowladges > 64:
-            self.progressBar4.setStyleSheet("QProgressBar {\n"
+        elif self.knowledges > 64:
+            self.knowledgesPB.setStyleSheet("QProgressBar {\n"
                                             "color: white;\n"
                                             "background-color: transparent;\n"
                                             "border: 4px solid black;\n"
@@ -303,12 +284,37 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
-        self.progressBar4.setProperty("value", self.knowladges)
-        self.progressBar4.setObjectName("progressBar")
+    # функция изменяющая деньги
+    def change_money(self, amount):
+        self.money += amount
+        self.moneyL.setText("Money: " + str(self.money) + "$")
 
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    # функция изменяющая зоровье
+    def change_health(self, amount):
+        self.healthh += amount
+        if self.healthh < 1:
+            self.healthh = 0
+        if self.healthh > 99:
+            self.healthh = 100
+        self.healthPB.setValue(self.healthh)
+        self.color_h()
+    def change_motivation(self, amount):
+        self.motivation += amount
+        if self.motivation < 1:
+            self.motivation = 0
+        if self.motivation > 99:
+            self.motivation = 100
+        self.motivationPB.setValue(self.motivation)
+        self.color_mtv()
+    def change_knowledge(self, amount):
+        self.knowledges += amount
+        if self.knowledges < 1:
+            self.knowledges = 0
+        if self.knowledges > 99:
+            self.knowledges = 100
+        self.knowledgesPB.setValue(self.knowledges)
+        self.color_knw()
+
     # окно вопросов
     def start_game(self):
         self.start.deleteLater()
@@ -348,8 +354,8 @@ class Game(object):
         self.effect(pair[0][1])
         try:
             pair = questions.pop(keys[0])
-            if "cost" in pair[0][1] and pair[0][1]["cost"] > int(self.moneyL.text()):
-                if int(self.healthL.text()) <= 0:
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1]["min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
+                if self.healthh <= 0:
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
@@ -384,7 +390,7 @@ class Game(object):
                     self.dgrid.addWidget(self.option2, *(2, 0))
 
             else:
-                if int(self.healthL.text()) <= 0:
+                if self.healthh <= 0:
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
@@ -436,8 +442,8 @@ class Game(object):
         self.effect(pair[1][1])
         try:
             pair = questions.pop(keys[0])
-            if "cost" in pair[0][1] and pair[0][1]["cost"] > int(self.moneyL.text()):
-                if int(self.healthL.text()) <= 0:
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1]["min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
+                if self.healthh <= 0:
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
@@ -471,7 +477,7 @@ class Game(object):
                     self.dgrid.addWidget(self.option1, *(1, 0))
                     self.dgrid.addWidget(self.option2, *(2, 0))
             else:
-                if int(self.healthL.text()) <= 0:
+                if self.healthh <= 0:
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
@@ -514,15 +520,29 @@ class Game(object):
             self.question.adjustSize()
             self.dgrid.addWidget(self.question, *(0, 0))
 
+    def effect(self, assoc):
+        as_keys = list(assoc.keys())
+        for i in as_keys:
+            if i == "hp":
+                self.change_health(assoc[i])
+            if i == "money":
+                self.change_money(assoc[i])
+            if i == "cost":
+                self.change_money(-assoc[i])
+            if i == "mtv":
+                self.change_motivation(assoc[i])
+            if i == "knw":
+                self.change_knowledge(assoc[i])
+
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_shop.setText(_translate("MainWindow", "Shop"))
-        s = 345
-        self.label1.setText(_translate("MainWindow", "Money: " + str(self.money) + "$"))
-        self.label2.setText(_translate("MainWindow", "Health"))
-        self.label3.setText(_translate("MainWindow", "Motivation"))
-        self.label4.setText(_translate("MainWindow", "Knowledges"))
+        self.moneyL.setText(_translate("MainWindow", "Money: " + str(self.money) + "$"))
+        self.healthPBtext.setText(_translate("MainWindow", "Health"))
+        self.motivationPBtext.setText(_translate("MainWindow", "Motivation"))
+        self.knowledgesPBtext.setText(_translate("MainWindow", "Knowledges"))
 
 if __name__ == "__main__":
     import sys
