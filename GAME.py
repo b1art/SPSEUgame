@@ -507,7 +507,7 @@ class Game(object):
             self.color_mtv()
             self.color_h()
     def book(self):
-        if self.money >= 10:
+        if self.money >= 15:
             self.knowledges += 10
             self.money -= 15
             self.moneyL.setText("Money: " + str(self.money) + "$")
@@ -1045,7 +1045,7 @@ class Game(object):
         self.knowledgesPBtext.setText(_translate("MainWindow", "Knowledges"))
         if self.money < 1:
             self.money = 0
-            #self.moneyL.setText("Money: 0$")
+            self.moneyL.setText("Money: 0$")
 
 
 
