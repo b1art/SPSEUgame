@@ -202,18 +202,22 @@ class Game(object):
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.healthPB.setValue(self.healthh)
             self.motivationPB.setValue(self.motivation)
+            self.color_mtv()
+            self.color_h()
     def book(self):
         if self.money >= 10:
             self.knowledges += 10
             self.money -= 15
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.knowledgesPB.setValue(self.knowledges)
+            self.color_knw()
     def puls(self):
         if self.money >= 18:
             self.healthh += 15
             self.money -= 18
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.healthPB.setValue(self.healthh)
+            self.color_knw()
     def color_h(self):
         if self.healthh < 35:
             self.healthPB.setStyleSheet("QProgressBar {\n"
@@ -422,7 +426,8 @@ class Game(object):
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
-                    self.question.setText("x_x")
+                    self.question.setText("Вы не смогли справиться с учебой и покинули ВУЗ")
+                    self.question.setWordWrap(True)
                     self.question.setAlignment(QtCore.Qt.AlignCenter)
                     self.question.adjustSize()
                     self.question.setStyleSheet(
@@ -486,7 +491,8 @@ class Game(object):
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
-                    self.question.setText("x_x")
+                    self.question.setText("Вы не смогли справиться с учебой и покинули ВУЗ")
+                    self.question.setWordWrap(True)
                     self.question.setAlignment(QtCore.Qt.AlignCenter)
                     self.question.adjustSize()
                     self.question.setStyleSheet(
@@ -574,7 +580,8 @@ class Game(object):
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
                     self.question.setFont(Game.font)
-                    self.question.setText("x_x")
+                    self.question.setText("Вы не смогли справиться с учебой и покинули ВУЗ")
+                    self.question.setWordWrap(True)
                     self.question.setAlignment(QtCore.Qt.AlignCenter)
                     self.question.adjustSize()
                     self.question.setStyleSheet(
