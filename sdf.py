@@ -739,50 +739,12 @@ class Game(object):
         self.pushButton2.clicked.connect(self.book)
         self.pushButton3.clicked.connect(self.puls)
 
-app = QtWidgets.QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
-ui = Ui_MainWindow_start()
-ui.setupUi(MainWindow)
-MainWindow.show()
-def open_main_window_w():
-    global GameWindow
-    GameWindow = QtWidgets.QMainWindow()
-    ui = Game("wooman")
-    ui.setupUi(GameWindow)
-    GenderWindow.close()
-    GameWindow.show()
-    ui.start.clicked.connect(ui.start_game)
 
-def open_main_window_m():
-    global GameWindow
-    GameWindow = QtWidgets.QMainWindow()
-    ui = Game("man")
-    ui.setupUi(GameWindow)
-    GenderWindow.close()
-    GameWindow.show()
-    ui.start.clicked.connect(ui.start_game)
-def open_window_gender():
-    global GenderWindow
-    GenderWindow = QtWidgets.QMainWindow()
-    ui = Ui_GenderWindow_gender()
-    ui.setupUi(GenderWindow)
-    MainWindow.close()
-    GenderWindow.show()
-    ui.pushButton_3.clicked.connect(open_main_window_w)
-    ui.pushButton_4.clicked.connect(open_main_window_m)
-
-
-ui.pushButton_2.clicked.connect(open_window_gender)
-sys.exit(app.exec_())
-
-#Для запуска исключительно main.py(проверка на работоспособность)
-
-"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Game()
+    ui = Game("wooman")
     ui.setupUi(MainWindow)
     MainWindow.show()
-    sys.exit(app.exec_())"""
+    sys.exit(app.exec_())

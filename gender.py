@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_GenderWindow(object):
+class Ui_GenderWindow_gender(object):
     def setupUi(self, GenderWindow):
         GenderWindow.setObjectName("GenderWindow")
         GenderWindow.resize(1920, 1080)
@@ -67,7 +67,7 @@ class Ui_GenderWindow(object):
         GenderWindow.setWindowTitle(_translate("GenderWindow", "GenderWindow"))
         self.label.setText(_translate("GenderWindow", "Выберите пол персонажа"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     ui.setupUi(GenderWindow)
     GenderWindow.show()
     sys.exit(app.exec_())
-
+"""

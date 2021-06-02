@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
 "font-size: 90px;\n"
 "")
         self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        """self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(1180, 300, 191, 161))
         self.label_2.setStyleSheet("background-color: transparent;")
         self.label_2.setText("")
@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.label_4.setStyleSheet("background-color: transparent;")
         self.label_4.setText("")
         self.label_4.setPixmap(QtGui.QPixmap("C:/Users/somei/Downloads/pngwing.com (1).png"))
-        self.label_4.setObjectName("label_4")
+        self.label_4.setObjectName("label_4")"""
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -55,7 +55,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "Отчисленa!"))
-
+"""
 
 if __name__ == "__main__":
     import sys
@@ -65,3 +65,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+"""
