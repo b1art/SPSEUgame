@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QGridLayout
 import json
 import random
@@ -10,13 +11,16 @@ with open("questions.json", "r") as file:
 keys = list(questions.keys())
 pair = questions.pop(keys[0])
 
+
 class Game(object):
     font = QtGui.QFont()
     font.setFamily("Segoe Print")
     font.setBold(True)
     font.setWeight(75)
-    def __init__(self, gen = "man"):
+
+    def __init__(self, gen="man"):
         self.gen = gen
+
     def setupUi(self, QMainWindow):
         QMainWindow.setObjectName("Game")
         QMainWindow.showMaximized()
@@ -506,6 +510,7 @@ class Game(object):
             self.motivationPB.setValue(self.motivation)
             self.color_mtv()
             self.color_h()
+
     def book(self):
         if self.money >= 15:
             self.knowledges += 10
@@ -513,6 +518,7 @@ class Game(object):
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.knowledgesPB.setValue(self.knowledges)
             self.color_knw()
+
     def puls(self):
         if self.money >= 18:
             self.healthh += 15
@@ -520,6 +526,7 @@ class Game(object):
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.healthPB.setValue(self.healthh)
             self.color_knw()
+
     def color_h(self):
         if self.healthh < 35:
             self.healthPB.setStyleSheet("QProgressBar {\n"
@@ -554,6 +561,7 @@ class Game(object):
                                         "QProgressBar::chunk{\n"
                                         "background-color: green;\n"
                                         "}")
+
     def color_mtv(self):
         if self.motivation < 35:
             self.motivationPB.setStyleSheet("QProgressBar {\n"
@@ -588,6 +596,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
+
     def color_knw(self):
         if self.knowledges < 35:
             self.knowledgesPB.setStyleSheet("QProgressBar {\n"
@@ -622,6 +631,7 @@ class Game(object):
                                             "QProgressBar::chunk{\n"
                                             "background-color: green;\n"
                                             "}")
+
     # функция изменяющая деньги
     def change_money(self, amount):
         self.money += amount
@@ -639,6 +649,7 @@ class Game(object):
             self.healthh = 100
         self.healthPB.setValue(self.healthh)
         self.color_h()
+
     def change_motivation(self, amount):
         self.motivation += amount
         if self.motivation < 1:
@@ -647,6 +658,7 @@ class Game(object):
             self.motivation = 100
         self.motivationPB.setValue(self.motivation)
         self.color_mtv()
+
     def change_knowledge(self, amount):
         self.knowledges += amount
         if self.knowledges < 1:
@@ -675,16 +687,16 @@ class Game(object):
         self.option1.setFont(Game.font)
         self.option1.setStyleSheet(
             "QPushButton{\n"
-"font-size: 25px;font-style: normal;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+            "font-size: 25px;font-style: normal;"
+            "border-radius: 20px;\n"
+            "border: 1.5px solid white;\n"
+            "color: white;\n"
+            "}\n"
+            "QPushButton:hover{\n"
+            "color: black;\n"
+            "border: 1.5px solid black;\n"
+            "}\n"
+            ""
         )
         self.option1.clicked.connect(self.answered_u)
         self.option2 = QtWidgets.QPushButton(self.dialog)
@@ -692,22 +704,23 @@ class Game(object):
         self.option2.setFont(Game.font)
         self.option2.setStyleSheet(
             "QPushButton{\n"
-"font-size: 25px;font-style: normal;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+            "font-size: 25px;font-style: normal;"
+            "border-radius: 20px;\n"
+            "border: 1.5px solid white;\n"
+            "color: white;\n"
+            "}\n"
+            "QPushButton:hover{\n"
+            "color: black;\n"
+            "border: 1.5px solid black;\n"
+            "}\n"
+            ""
         )
         self.option2.clicked.connect(self.answered_l)
 
         self.dgrid.addWidget(self.question, *(0, 0))
         self.dgrid.addWidget(self.option1, *(1, 0))
         self.dgrid.addWidget(self.option2, *(2, 0))
+
     # написать ловер pair 1 1 соответсвенно
     def answered_u(self):
         global pair
@@ -722,7 +735,8 @@ class Game(object):
         self.effect(pair[0][1])
         try:
             pair = questions.pop(keys[0])
-            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1]["min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1][
+                "min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
                 if self.healthh <= 0 or self.motivation <= 0 or self.knowledges <= 0:
 
                     self.question = QtWidgets.QLabel(self.dialog)
@@ -755,32 +769,32 @@ class Game(object):
                     self.option1.setFont(Game.font)
                     self.option1.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2 = QtWidgets.QPushButton(self.dialog)
                     self.option2.setText(pair[1][0])
                     self.option2.setFont(Game.font)
                     self.option2.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2.clicked.connect(self.answered_l)
 
@@ -819,16 +833,16 @@ class Game(object):
                     self.option1.setFont(Game.font)
                     self.option1.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option1.clicked.connect(self.answered_u)
                     self.option2 = QtWidgets.QPushButton(self.dialog)
@@ -836,16 +850,16 @@ class Game(object):
                     self.option2.setFont(Game.font)
                     self.option2.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2.clicked.connect(self.answered_l)
 
@@ -877,7 +891,8 @@ class Game(object):
         self.effect(pair[1][1])
         try:
             pair = questions.pop(keys[0])
-            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1]["min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
+            if "cost" in pair[0][1] and pair[0][1]["cost"] > self.money or "min_mtv" in pair[0][1] and pair[0][1][
+                "min_mtv"] > self.motivation or "min_knw" in pair[0][1] and pair[0][1]["min_knw"] > self.knowledges:
                 if self.healthh <= 0 or self.motivation <= 0 or self.knowledges <= 0:
                     self.question = QtWidgets.QLabel(self.dialog)
                     Game.font.setPointSize(20)
@@ -908,32 +923,32 @@ class Game(object):
                     self.option1.setFont(Game.font)
                     self.option1.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2 = QtWidgets.QPushButton(self.dialog)
                     self.option2.setText(pair[1][0])
                     self.option2.setFont(Game.font)
                     self.option2.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2.clicked.connect(self.answered_l)
 
@@ -971,16 +986,16 @@ class Game(object):
                     self.option1.setFont(Game.font)
                     self.option1.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option1.clicked.connect(self.answered_u)
                     self.option2 = QtWidgets.QPushButton(self.dialog)
@@ -988,16 +1003,16 @@ class Game(object):
                     self.option2.setFont(Game.font)
                     self.option2.setStyleSheet(
                         "QPushButton{\n"
-"font-size: 25px;"
-"border-radius: 20px;\n"
-"border: 1.5px solid white;\n"
-"color: white;\n"
-"}\n"
-"QPushButton:hover{\n"
-"color: black;\n"
-"border: 1.5px solid black;\n"
-"}\n"
-""
+                        "font-size: 25px;"
+                        "border-radius: 20px;\n"
+                        "border: 1.5px solid white;\n"
+                        "color: white;\n"
+                        "}\n"
+                        "QPushButton:hover{\n"
+                        "color: black;\n"
+                        "border: 1.5px solid black;\n"
+                        "}\n"
+                        ""
                     )
                     self.option2.clicked.connect(self.answered_l)
 
@@ -1034,7 +1049,6 @@ class Game(object):
             if i == "knw":
                 self.change_knowledge(assoc[i])
 
-
     def retranslateUi(self, QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         QMainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -1045,8 +1059,6 @@ class Game(object):
         self.knowledgesPBtext.setText(_translate("MainWindow", "Knowledges"))
         if self.money < 1:
             self.money = 0
-            self.moneyL.setText("Money: 0$")
-
 
 
 if __name__ == "__main__":
@@ -1054,5 +1066,7 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Game("wooman")
     ui.setupUi(MainWindow)
+    MainWindow.setWindowTitle("Simulator")
+    MainWindow.setWindowIcon(QIcon("pics/education.png"))
     MainWindow.show()
     sys.exit(app.exec_())
