@@ -1,3 +1,4 @@
+#new day new life
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QGridLayout
@@ -525,7 +526,7 @@ class Game(object):
             self.money -= 18
             self.moneyL.setText("Money: " + str(self.money) + "$")
             self.healthPB.setValue(self.healthh)
-            self.color_knw()
+            self.color_h()
 
     def color_h(self):
         if self.healthh < 35:
